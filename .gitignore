@@ -21,5 +21,7 @@ venv
 *.ssz
 .idea
 
-config.env
-defaults.env
+data/*
+.idea/
+_snapshot_eth_getBlockByNumber.json
+output/*
