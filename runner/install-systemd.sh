@@ -96,7 +96,7 @@ sudo cp lighthouse /usr/local/bin/lighthouse
 sudo chmod +x /usr/local/bin/lighthouse
 
 # Clean up
-rm -rf geth.tar.gz "$GETH_DIR" lighthouse.tar.gz "$LIGHTHOUSE_DIR"
+rm -rf geth.tar.gz "$GETH_DIR" lighthouse.tar.gz lighthouse
 
 echo ""
 running_text "WARNING: Before proceeding, please ensure that you are prepared to become a validator, You need to set up your node data and be ready to join the DaVinci Protocol." "$RED"
@@ -119,12 +119,19 @@ sleep 3
 echo ""
 running_text "[Calling On-Chain Data] Requesting to Become a DaVinci Validator Member..."
 git clone https://github.com/davinchi-protocol/da-validator >/dev/null 2>&1
-cd da-validator
 echo ""
-git checkout main
 
 sleep 3
 running_text "Calling Complete!"
 echo ""
 running_text "Get Ready to be a part of DaVinci Node Earners and please edit your node metadata like address, graffiti, and name at folder da-validator" "$YELLOW"
+
 echo ""
+running_text "Initialize Genesis"
+geth --datadir=/root/davinci --state.scheme=hash --cache.preimages --verbosity=3 init ./da-validator/metadata/genesis.json >/dev/null 2>&1
+
+echo ""
+running_text "Create Systemd Config"
+sudo touch /etc/systemd/system/el.service >/dev/null 2>&1
+sudo touch /etc/systemd/system/cl.service >/dev/null 2>&1
+sudo touch /etc/systemd/system/vc.service >/dev/null 2>&1
